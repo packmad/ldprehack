@@ -10,11 +10,14 @@ int strcmp(const char* s1, const char* s2)
 
 int ptrace(int request, int pid, int addr, int data)
 {
+    printf("ptrace hijacking\n");
     return 0;
 }
 
 int rand()
 {
-    return 42;
+    int ret = 42;
+    printf("rand hijacking, ret=%d\n", ret);
+    return ret;
 }
 

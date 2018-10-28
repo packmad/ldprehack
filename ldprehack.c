@@ -1,10 +1,13 @@
+#define _GNU_SOURCE
+#include<dlfcn.h>
 #include<stdio.h>
 
-
+typedef int (*orig_strcmp_f_type)(const char *s1, const char *s2);
 int strcmp(const char* s1, const char* s2)
 {
-    printf("s1: %sn\n", s1);
-    printf("s2: %sn\n", s2);
+    orig_strcmp_f_type orig_strcmp = (orig_strcmp_f_type) dlsym(RTLD_NEXT,"strcmp");
+    int ret = orig_strcmp(s1, s2);
+    printf("strcmp(%s, %s) == %d\n", s1, s2, ret); 
     return 0;
 }
 
